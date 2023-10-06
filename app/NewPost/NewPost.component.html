@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>ExpertVision Home</title>
+<link rel="Stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+
+<body>
+<h4>New Post</h4><br>
+<div class="post" *ngFor="let post of displayUserPost | sort:'desc':'id' | filterPipe:searchKey:'Title'">
+<div *ngIf="post.pinned==0">
+  <div >
+    <div class="card-body">
+      <span class="image" *ngFor="let user of UserDetail">
+   <span *ngIf="user.UserName===post.Name"> <img id="userimage" src={{user.ImageUrl}}></span>
+  </span>
+
+  <h5 class="card-title" style="margin-left: 50px;">{{post.Name}}</h5>
+     
+      <br>
+      <h5 class="card-title">{{post.Title}}</h5>
+      <br>
+      <pre class="card-text">{{post.Message}}</pre>
+<button class="like"  style="border: none;"> <i class="far fa-thumbs-up"></i>{{post.likes}} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button  (click)="[toggleButton(post.id), displayComment(post.id)]" style="border: none;"><i class="far fa-comment"></i> Comment</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="share"><i class="far fa-share-square"> Share</i></span>
+<span class="delete" (click)="deletePost(post.id)" style="float: right;margin-right: 30px;"><i class="far fa-trash-alt"></i>Delete</span>
+<br><br>
+
+<div *ngIf="post.isButtonOpen">
+<form [formGroup]="coment">
+<div class="input-group">
+<textarea class="input" [(ngModel)]="inputValues[post.id]" formControlName="comment"  placeholder="Your Answer...." (input)="adjustTextareaHeight($event.target)" required></textarea>
+<input class="button--submit" (click)="postComment(post.id)"  value="Post" type="submit">
+</div>
+</form>
+
+
+<div *ngFor="let comment of postComments[post.id]">
+<div class="row" style="align-items: center;">
+<div class="col-2">
+<button class="Commentlike"   style="border: none;margin-left:10px ;"> <i class="far fa-thumbs-up"></i>{{comment.likes}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<div class="col">
+<div >
+<h3 style="font-size: 20px;">{{comment.Name}}</h3>
+<hr>
+<p class="card-text" style="margin-left:10px ;"> {{comment.Comment}}</p>
+<button  (click)="[toggle(comment.id),displayReply(comment.id)]" style="border: none;"><i class="far fa-comment"></i> reply</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button  (click)="[pin(comment,post),displayReply(comment.id)]" style="border: none;"><i class="fi fi-rs-thumbtack"></i> Pin/Unpin</button><br>
+
+<div class="reply" *ngIf="comment.isButtonOpen"><br>
+<input type="text"  [(ngModel)]="input[comment.id]" class="underline-input" placeholder="reply....">
+<input class="button" (click)="postReply(comment.id)"  value="Post" type="submit">
+<br>
+<div *ngFor="let reply of postReplys[comment.id]">
+<br>
+<h3 style="font-size: 15px;">{{reply.Name}}</h3>
+<p class="card-text" style="margin-left:15px ; font-size: 13px;"> {{reply.Message}}</p>
+</div>
+
+
+
+</div>
+</div><br>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+    </div>
+    <hr>
+  </div>
+  <br>
+</div>
+</div>
+</body>

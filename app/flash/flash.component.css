@@ -1,0 +1,46 @@
+.flash-message{
+margin-top: 75px;
+z-index: 9999;
+  width: 100%;
+  position: fixed;
+}
+
+.flash-message marquee {
+  width: 100%;
+  height: 50px; /* Adjust the height as needed */
+  background-color:rgb(254, 252, 252);
+
+
+  font-size: 20px; /* Set the font size */
+  text-shadow: 2px 2px 4px #000000;
+  animation: rainbow 5s infinite;
+
+  -webkit-animation: rainbow 5s infinite;
+}
+
+@-webkit-keyframes rainbow {
+  0% { color: orange; }
+  10% { color: purple; }
+  20% { color: red; }
+  30% { color: CadetBlue; }
+  40% { color: yellow; }
+  50% { color: coral; }
+  60% { color: green; }
+  70% { color: cyan; }
+  80% { color: DeepPink; }
+  90% { color: DodgerBlue; }
+  100% { color: orange; }
+}
+@keyframes rainbow{
+  0%{color: orange;}
+10%{color: purple;}
+20%{color: red;}
+30%{color: CadetBlue;}
+40%{color: yellow;}
+50%{color: coral;}
+60%{color: green;}
+70%{color: cyan;}
+80%{color: DeepPink;}
+90%{color: DodgerBlue;}
+100%{color: orange;}
+}

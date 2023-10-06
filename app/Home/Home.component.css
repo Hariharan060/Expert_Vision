@@ -1,0 +1,79 @@
+
+body{
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.intro{
+margin-left: 20px;
+}
+.page{
+margin-left: 20px;
+
+}
+
+#popular-news{
+  display: flex;
+  margin: 30px 5%;
+}
+#popular-news img{
+  width: 100%;
+}
+#popular-news h2{
+  margin: 0;
+  padding: 5px;
+  color: black;
+}
+#featured h2{
+  background-color: blueviolet;
+  font-style:italic;
+    text-align: center;
+    font-size: large;
+    color: white;
+}
+#picks h2{
+ background-color: blueviolet;
+  font-style:italic;
+    text-align: center;
+    font-size: large;
+    color: white;
+}
+#latest h2{
+background-color: red;
+  font-style:italic;
+ font-size: large;
+  text-align: center;
+  color: white;
+}
+.carousel, .news-container{
+  position: relative;
+}
+.popular-news-text{
+  font-size: 14px;
+  position: absolute;
+  color: white;
+  z-index: 2;
+  bottom: 5px;
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 0 10px;
+  transition-duration: 500ms;
+}
+#featured{
+  flex: 1;
+}
+#latest, #picks {
+  flex: 0.5;
+}
+.news-container:hover{
+  cursor: pointer;
+}
+.news-container:hover > .popular-news-text{
+  bottom: 10px;
+}
+.carousel-inner{
+  cursor: pointer;
+}
+
+
+

@@ -1,0 +1,10 @@
+<body>
+<app-Header *ngIf="!displayHeaderandFooter()"></app-Header>
+<app-flash [Time]="targetTime"></app-flash>
+
+<div id="content-area">
+  <router-outlet></router-outlet>
+</div>
+<app-Footer *ngIf="!displayHeaderandFooter()"></app-Footer>
+
+</body>

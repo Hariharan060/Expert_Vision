@@ -1,0 +1,35 @@
+#footer{
+
+  font-family: 'Roboto', sans-serif;
+
+  min-height: 50px;
+  width: 100%;
+  background-color:teal;
+  text-align: center;
+
+
+}
+#foot {
+color: white;
+display: inline-block;
+line-height: 50px;
+font-size: 20px;
+
+
+}
+#footer ul li {
+  display: inline;
+ margin-left: 25px;
+  line-height: 30px;
+  font-size: 25px;
+  margin-right: 25px;
+}
+#footer ul li a {
+  color: white;
+}
+.outer-footer{
+color: white;
+font-size: 15px;
+
+}
+

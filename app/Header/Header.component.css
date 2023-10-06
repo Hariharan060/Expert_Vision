@@ -1,0 +1,41 @@
+#navbar{
+  height: 75px;
+  width: 100%;
+  background-color:teal;
+  font-family: 'Roboto', sans-serif;
+position:fixed;
+z-index: 9999;
+
+}
+#navbar ul li{
+  display: inline;
+  margin-left: 25px;
+  list-style-type: none;
+  line-height: 75px;
+  color: white;
+}
+#navbar ul li a{
+  text-decoration:none ;
+   color: white;
+}
+
+
+#nav a{
+  text-decoration:none ;
+  color: white;
+  display: inline-block;
+  line-height: 75px;
+  padding-left: 15px;
+  font-size: 20px;
+}
+#nav,#navbar{
+  float: left;
+}
+#bar{
+  margin-left: 200px;
+}
+.log{
+  float:right;
+  padding-right: 10px;
+
+}

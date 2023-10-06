@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>ExpertVision Home</title>
+<link rel="Stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card" id="cards" style="width: 16rem">
+					<h5 class="card-header">Featured</h5>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item">+ Create space</li>
+						<li class="list-group-item"><i class="fas fa-vial"></i> Fuel</li>
+						<li class="list-group-item"><i
+							class="fas fa-hand-holding-water"></i> Gasoline</li>
+
+						<li class="list-group-item"><i class="fas fa-paper-plane"></i>
+							Topics</li>
+						<li class="list-group-item"><i class="fas fa-spa"></i>
+							Discover spaces</li>
+					</ul>
+
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<div class="box">
+					<div class="card">
+						<div class="card-body">
+							<input class="form-control form-control-lg" type="text" [(ngModel)]="searchKey"
+								placeholder="What do you want to ask or share?" style="font-size: 15px;">
+							<button type="button" class="btn" data-bs-toggle="modal"
+								data-bs-target="#exampleModal" data-bs-whatever="@fat">
+								<i class="fas fa-question"></i> Ask
+							</button>
+							<button type="button" style="margin-left: 175px;" class="btn"
+								data-bs-toggle="modal" data-bs-target="#exampleModal"
+								data-bs-whatever="@fat">
+								<i class="fas fa-pencil-ruler"></i> Answer
+							</button>
+
+							<div class="modal fade" id="exampleModal" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Ask
+												Here</h1>
+										</div>
+										<div class="modal-body">
+											<form>
+												<div class="mb-3">
+													<label for="recipient-name" class="col-form-label">Recipient:</label>
+													<input type="text" class="form-control" id="recipient-name">
+												</div>
+												<div class="mb-3">
+													<label for="message-text" class="col-form-label">Message:</label>
+													<textarea class="form-control" id="message-text"></textarea>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary">Send
+												message</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<button type="button" style="float: right;" class="btn"
+								data-bs-toggle="modal" data-bs-target="#exampleModals"
+								data-bs-whatever="@fat">
+								<i class="fas fa-pen"></i>post
+							</button>
+
+							<div class="modal fade" id="exampleModals" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Post</h1>
+										</div>
+										<div class="modal-body">
+											<form  [formGroup]="Post">
+												<div class="mb-3">
+													<label for="recipient-name" class="col-form-label">Title</label>
+													<input type="text" class="form-control" id="recipient-name"
+														name="title" formControlName="Title">
+												</div>
+												<div class="mb-3">
+													<label for="message-text" class="col-form-label">Message:</label>
+													<textarea class="form-control" id="message-text"
+														name="message"  formControlName="Message" style="white-space: pre-wrap;"></textarea>
+												</div>
+
+
+												<div class="modal-footer">
+													<button type="button" id="cancel" class="btn btn-secondary"
+														data-bs-dismiss="modal">Close</button>
+													<button type="button" value="post" class="btn btn-primary"  (click)="post()" [disabled]="Post.invalid">post</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+<div *ngFor="let post of displayUserPost | sort:'desc':'id' | filterPipe:searchKey:'Title'">
+
+        <div class="card">
+          <div class="card-body">
+            <span class="image" *ngFor="let user of UserDetail">
+         <span *ngIf="user.UserName===post.Name"> <img id="userimage" src={{user.ImageUrl}}></span>
+        </span>
+
+        <h5 class="card-title" style="margin-left: 50px;">{{post.Name}}</h5>
+            <hr>
+            <h5 class="card-title">{{post.Title}}</h5>
+            <hr>
+            <pre class="card-text">{{post.Message}}</pre>
+<button class="like" (click)=" likePost(post)"   style="border: none;"> <i class="far fa-thumbs-up"></i>{{post.likes}} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button (click)="[toggleButton(post.id), displayComment(post.id)]" style="border: none;"><i class="far fa-comment"></i> Comment</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<span class="share"><i class="far fa-share-square"> Share</i></span>
+<br><br>
+
+<div *ngIf="post.isButtonOpen">
+<form [formGroup]="coment">
+  <div class="input-group">
+    <textarea class="input" [(ngModel)]="inputValues[post.id]" formControlName="comment"  placeholder="Your Answer...." (input)="adjustTextareaHeight($event.target)" required></textarea>
+    <input class="button--submit"  (click)="postComment(post.id)"  value="Post" type="submit">
+</div>
+</form>
+
+
+<div *ngFor="let comment of postComments[post.id]">
+  <div class="row" style="align-items: center;">
+  <div class="col-2">
+    <button class="Commentlike" (click)=" likecomment(comment)"   style="border: none;margin-left:10px ;"> <i class="far fa-thumbs-up"></i>{{comment.likes}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="col">
+  <div>
+    <h3 style="font-size: 20px;">{{comment.Name}}</h3>
+    <hr>
+   <p class="card-text" style="margin-left:10px ;"> {{comment.Comment}}</p>
+   <button  (click)="[toggle(comment.id),displayReply(comment.id)]" style="border: none;"><i class="far fa-comment"></i> reply</button><br>
+   <div class="reply" *ngIf="comment.isButtonOpen"><br>
+   <input type="text"  [(ngModel)]="input[comment.id]" class="underline-input" placeholder="reply....">
+   <input class="button" (click)="postReply(comment.id)"  value="Post" type="submit">
+<br>
+<div *ngFor="let reply of postReplys[comment.id]">
+  <br>
+  <h3 style="font-size: 15px;">{{reply.Name}}</h3>
+ <p class="card-text" style="margin-left:15px ; font-size: 13px;"> {{reply.Message}}</p>
+</div>
+
+
+
+  </div>
+  </div><br>
+
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+          </div>
+        </div>
+        <br>
+      </div>
+			</div>
+
+
+
+
+			<div class="col-md-3">
+        <div *ngFor="let image of displayimage">
+          <div class="img">
+            <img id="add" src={{image.ImageUrl}}>
+          </div>
+          <br> <br> <br> <br> <br> <br> <br>
+          <br> <br> <br> <br> <br>
+        </div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+</body>
+
+
+
+</html>

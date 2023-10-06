@@ -1,0 +1,140 @@
+<head>
+  <title>Expert vision</title>
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+</head>
+<body>
+  <div class="profile" *ngFor="let user of UserDetail">
+  <div class="card">
+
+      <div class="upperborder">
+      </div>
+      <div class="image" (mouseenter)="showEditIcon = true" (mouseleave)="showEditIcon = false"  (click)="openFileInput()">
+        <span><img id="userimage" src={{user.ImageUrl}} [class.hovered]="showEditIcon"></span>
+    </div>
+    <input  type="file" accept="image/*" id="fileinput" (change)=" onSelectFile($event,user.id)" style="display: none;">
+
+      <div class="text">
+          <h3 (mouseenter)="showEdit('name')" (mouseleave)="hideEdit('name')">{{user.Name}}&nbsp;
+            <span *ngIf="showEditOption.name" class="edit-option" type="button" (click)="openModal('Edit Name')"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="Edit Name">Edit</span></h3>
+
+
+          <p>@{{user.UserName}}</p>
+      </div>
+      <br><br>
+      <h4>Profile</h4>
+      <br>
+      <div #textElement>
+        <label (mouseenter)="showEdit('email')" (mouseleave)="hideEdit('email')"><i class="fas fa-envelope"></i> Email: {{user.Email}}&nbsp;
+        <span *ngIf="showEditOption.email" class="edit-option" type="button" (click)="openModal('Edit Email')"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="Edit Email">Edit</span></label>
+
+        <br><br>
+        <label (mouseenter)="showEdit('country')" (mouseleave)="hideEdit('country')"><i class="fas fa-globe"></i> Country: {{user.Country}}&nbsp;
+        <span *ngIf="showEditOption.country" class="edit-option" type="button" (click)="openModal('Edit Country')"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="Edit Country">Edit</span></label>
+      </div>
+    </div>
+<br>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="update" (ngSubmit)="updateDetail(user.id)" >
+              <div class="mb-3">
+                <div *ngIf="edit()==='Name'">
+                <label for="recipient-name" class="col-form-label"><b>Name</b></label>
+                <input type="text" class="form-control" formControlName="Name" placeholder="{{user.Name}}" id="recipient-name" >
+              </div>
+              <div *ngIf="edit()==='Country'">
+                <label for="recipient-name" class="col-form-label"><b>Country</b></label>
+                <input type="text" class="form-control"  formControlName="Country" placeholder="{{user.Country}}"  id="recipient-name"  >
+              </div>
+              <div *ngIf="edit()==='Email'">
+                <label for="recipient-name" class="col-form-label"><b>Email</b></label>
+                <input type="text" class="form-control" formControlName="Email" placeholder="{{user.Email}}" id="recipient-name" >
+              </div>
+              </div>
+
+
+          <div class="modal-footer" style="margin-top: 100px;">
+            <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!update.valid">Done</button>
+          </div>
+        </form>
+      </div>
+        </div>
+      </div>
+
+    </div>
+      </div>
+      <br>
+
+      <h5>Your Post</h5>
+      <br>
+
+    <div class="post" *ngFor="let post of displayUserPost">
+          <div class="card-body">
+            <h5 class="card-title">{{post.Name}}</h5>
+            <br>
+            <h5 class="card-title">{{post.Title}}</h5>
+            <br>
+            <pre class="card-text">{{post.Message}}</pre>
+            <button class="like"  style="border: none;"> <i class="far fa-thumbs-up"></i>{{post.likes}} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button  (click)="[toggleButton(post.id), displayComment(post.id)]" style="border: none;"><i class="far fa-comment"></i> Comment</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <span class="share"><i class="far fa-share-square"> Share</i></span>
+            <br><br>
+            </div>
+            <br>
+
+            <div *ngIf="post.isButtonOpen">
+
+              <div *ngFor="let comment of postComments[post.id]">
+                <div >
+              <div class="row" style="align-items: center;">
+              <div class="col-2">
+                <button class="Commentlike"> <i class="far fa-thumbs-up"></i>{{comment.likes}}</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+              <div class="col">
+
+
+              <div >
+                <h3 style="font-size: 20px;">{{comment.Name}}</h3>
+                <hr>
+               <pre class="card-text" style="margin-left:10px ;"> {{comment.Comment}}</pre>
+               <button  (click)="[toggle(comment.id),displayReply(comment.id)]" style="border: none;"><i class="far fa-comment"></i> reply</button><br>
+               <div class="reply" *ngIf="comment.isButtonOpen"><br>
+               <input type="text"  [(ngModel)]="input[comment.id]" class="underline-input" placeholder="reply....">
+               <input class="button" (click)="postReply(comment.id)"  value="Post" type="submit">
+            <br>
+            <div *ngFor="let reply of postReplys[comment.id]" style="margin-left: 25px;">
+              <br>
+              <h3 style="font-size: 15px;">{{reply.Name}}</h3>
+             <pre class="card-text" style="margin-left:15px ; font-size: 13px;"> {{reply.Message}}</pre>
+            </div>
+
+
+
+              </div>
+              </div><br>
+
+            </div>
+
+
+            </div>
+
+            </div>
+            </div>
+</div>
+<hr>
+</div>
+
+
+  </body>
+
+

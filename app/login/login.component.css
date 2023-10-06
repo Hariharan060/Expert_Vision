@@ -1,0 +1,29 @@
+@charset "ISO-8859-1";
+body{
+margin-top:-75px ;
+background-image:url("../../assets/image/white5.jpg");
+ background-repeat: no-repeat;
+background-size:cover;
+background-position:relative;
+font-family: 'Times New Roman', Times, serif;
+padding: 200px 0px 150px 0px;
+}
+h2,h4{
+
+text-align:center;
+}
+
+.form{
+  text-align:center;
+max-width:550px;
+margin:auto;
+box-shadow:black 0px 2px 8px 0px;
+padding:20px;
+width:400px;
+
+}
+.form input[type="text"],input[type="password"]{
+
+  height: 25px;
+
+}

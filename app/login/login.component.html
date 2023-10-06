@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Expert vision log-in</title>
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+
+
+	<form class="form" (ngSubmit)="login()" #Login= "ngForm" >
+		<h2>Welcome to Expert Vision</h2>
+		<h4>Connect with people</h4><br>
+		<h3>
+			<i class="fa fa-user"></i> Log-in	</h3><br>
+
+    <label>UserName: </label><br>
+    <input type="text"   name="username" [(ngModel)]="UserName" ngModel  #uname=ngModel required ><br>
+    <small class="text-danger" *ngIf="uname.invalid && uname.touched"><b>Username is required</b></small><br>
+    <label>Password: </label><br>
+    <input type="password" [(ngModel)]="Password"  name="password" ngModel #password=ngModel required><br>
+    <small class="text-danger" *ngIf="password.invalid && password.touched"><b>Password is required</b></small><br>
+
+	   <input type="submit" value="submit" [disabled]="!Login.valid"><br>
+     <span>Don't have an account?
+      <a routerLink="/SignUp">SignUp</a></span>
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Expert vision sign-up</title>
+
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+	<h2>Welcome to Expert Vision</h2>
+	<h4>Begin your professional carrier here</h4>
+	<form class="form" [formGroup]="Signup" (ngSubmit)="postUserDetail()">
+
+		<h3>
+			<i class="fa fa-user-alt"></i> sign-up
+		</h3>
+		<label>Name: </label><br>
+    <input type="text" name="form-control" formControlName="Name" required><br>
+    <small class="text-danger" *ngIf = "SignupFormControl.Name.touched&& SignupFormControl.Name.errors?.required "><b>Name is required</b></small>
+		<br>
+
+    <label>UserName: </label> <br>
+    <input type="text" name="form-control" formControlName="UserName" required ><br><br>
+
+    <label>Email: </label><br>
+     <input type="email" name="form-control" formControlName="Email" required><br>
+    <small class="text-danger" *ngIf="(SignupFormControl. Email. touched )&& SignupFormControl.Email.errors?.required "><b>Email is required</b></small>
+    <br>
+    <label>Password:</label><br>
+     <input type="password" name="form-control" formControlName="Password" required>
+		<br> <br>
+
+    <label>Country:</label><br>
+    <select  name="form-control" formControlName="Country" required>
+    <option  *ngFor="let Country of Country" [value]="Country.value" >{{Country.name}}</option>
+		</select><br> <br>
+
+    <label >Gender</label><br>
+    <span   *ngFor="let gen of Gender">
+      <input  type="radio" id="{{gen.id}}" value="{{gen.value}}"  formControlName="Gender"  name="Gender" >
+      <label>  &nbsp;{{gen.value}}&nbsp;</label>
+    </span><br><br>
+
+    <input type="submit" value="submit" [disabled]="!Signup.valid"><br>
+
+    <span>Already have an account?
+      <a routerLink="/login">Login</a></span>
+	</form>
+
+
+</body>
+</html>
+
